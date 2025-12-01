@@ -76,9 +76,9 @@
             <i class="fas fa-book-open me-2"></i> Kurikulum & Struktur
         </a>
 
-        <a href="#">
+        {{-- <a href="#">
             <i class="fas fa-users-cog me-2"></i> Manajemen User
-        </a>
+        </a> --}}
 
         <div class="p-3 mt-4">
             <form action="{{ route('logout') }}" method="POST">
