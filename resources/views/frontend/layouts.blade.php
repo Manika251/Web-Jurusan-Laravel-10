@@ -8,6 +8,7 @@
 
     <link rel="icon" href="{{ asset('img/logo-si.png') }}" type="image/png">
 
+    {{-- CDN Bootstrap & Font Awesome --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -51,33 +52,30 @@
             background-color: #082d4f; 
             border: none; 
             margin-top: 0; 
-            border-radius: 0; /* Supaya kotak tegas */
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Tambah bayangan sedikit */
+            border-radius: 0; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
         }
         .dropdown-item { color: #fff; padding: 10px 20px; }
         .dropdown-item:hover { background-color: #0d3b66; color: #ffc107; }
         .navbar-toggler { border: 1px solid rgba(255,255,255,0.5); }
         .navbar-toggler-icon { filter: invert(1); }
 
-        /* --- FITUR HOVER (LOGIC PENTING) --- */
-        /* Kode ini hanya jalan di Layar Besar (Desktop/Laptop) */
+        /* --- FITUR HOVER (Desktop Only) --- */
         @media (min-width: 992px) {
             .dropdown:hover .dropdown-menu {
-                display: block; /* Paksa muncul saat di-hover */
-                margin-top: 0; /* Hilangkan jarak supaya mouse tidak jatuh */
+                display: block; 
+                margin-top: 0; 
             }
             .dropdown .dropdown-menu {
-                display: none; /* Sembunyikan kalau tidak di-hover */
+                display: none; 
             }
-            /* Matikan fungsi klik bawaan bootstrap di desktop agar tidak bentrok */
             .dropdown-toggle::after {
                 transition: transform 0.3s;
             }
             .dropdown:hover .dropdown-toggle::after {
-                transform: rotate(180deg); /* Animasi panah kecil berputar */
+                transform: rotate(180deg); 
             }
         }
-
 
         /* --- FOOTER STYLE --- */
         footer {
@@ -87,7 +85,6 @@
             padding-top: 60px;
             font-family: sans-serif; 
         }
-        
         footer h5 { 
             font-weight: bold; 
             margin-bottom: 25px; 
@@ -95,12 +92,9 @@
             text-transform: uppercase; 
             letter-spacing: 1px;
         }
-        
         footer a { color: rgba(255,255,255,0.8); text-decoration: none; transition: 0.3s; }
         footer a:hover { color: #ffc107; opacity: 1; text-decoration: none; }
-        
         footer ul li { margin-bottom: 12px; font-size: 14px; }
-        
         .copyright-bar {
             background-color: #082d4f; 
             padding: 20px 0;
@@ -112,6 +106,7 @@
 
 <body>
 
+    <!-- HEADER ATAS (LOGO) -->
     <div class="header-top">
         <div class="container d-flex align-items-center">
             <a href="{{ route('home') }}" class="d-flex align-items-center text-decoration-none text-white">
@@ -128,27 +123,39 @@
         </div>
     </div>
 
+    <!-- NAVBAR (MENU) -->
     <nav class="navbar navbar-expand-lg header-nav sticky-top shadow-sm">
         <div class="container">
             <button class="navbar-toggler ms-auto my-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">Beranda</a></li>
+                    <!-- MENU BERANDA -->
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">Beranda</a>
+                    </li>
                     
+                    <!-- MENU PROFIL (SUDAH DIPERBAIKI) -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle {{ request()->routeIs('#') || request()->routeIs('academic.structure') ? 'active' : '' }}" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Profil</a>
+                        <a class="nav-link dropdown-toggle {{ request()->routeIs('profil.*') || request()->routeIs('akreditasi') || request()->routeIs('sejarah') ? 'active' : '' }}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Profil
+                        </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{{ route('akreditasi') }}">Akreditasi</a></li>
-                            <li><a class="dropdown-item" href="{{ route('academic.visimisi') }}">Visi & Misi</a></li>
+                            <!-- Link ini sekarang mengarah ke route 'profil.visimisi' -->
+                            <li><a class="dropdown-item" href="{{ route('profil.visimisi') }}">Visi & Misi</a></li>
                             <li><a class="dropdown-item" href="{{ route('sejarah') }}">Sejarah</a></li>
                             <li><a class="dropdown-item" href="https://www.google.com/maps?q=Universitas+Musamus+Merauke" target="_blank">Maps</a></li>
                         </ul>
                     </li>
 
+                    <!-- MENU AKADEMIK -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle {{ request()->routeIs('academic.*') || request()->routeIs('dosen') ? 'active' : '' }}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Akademik</a>
+                        <a class="nav-link dropdown-toggle {{ request()->routeIs('academic.*') || request()->routeIs('dosen') ? 'active' : '' }}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Akademik
+                        </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{{ route('academic.structure') }}">Struktur Organisasi</a></li>
                             <li><a class="dropdown-item" href="{{ route('dosen') }}">Dosen & Staff</a></li>
@@ -157,8 +164,11 @@
                         </ul>
                     </li>
 
+                    <!-- MENU AKTIFITAS -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle {{ request()->routeIs('posts*') || request()->routeIs('achievements*') || request()->routeIs('organizations*') ? 'active' : '' }}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Aktifitas</a>
+                        <a class="nav-link dropdown-toggle {{ request()->routeIs('posts*') || request()->routeIs('achievements*') || request()->routeIs('organizations*') ? 'active' : '' }}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Aktifitas
+                        </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{{ route('posts') }}">Berita</a></li>
                             <li><a class="dropdown-item" href="{{ route('achievements') }}">Prestasi Mahasiswa</a></li>
@@ -166,17 +176,23 @@
                         </ul>
                     </li>
 
-                    <li class="nav-item"><a class="nav-link {{ request()->routeIs('gallery') ? 'active' : '' }}" href="{{ route('gallery') }}">Galeri</a></li>
+                    <!-- MENU GALERI -->
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('gallery') ? 'active' : '' }}" href="{{ route('gallery') }}">Galeri</a>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
 
+    <!-- KONTEN HALAMAN -->
     @yield('content')
 
+    <!-- FOOTER -->
     <footer>
         <div class="container pb-4">
             <div class="row">
+                <!-- Kolom 1: Identitas -->
                 <div class="col-md-4 mb-4">
                     <h5 class="text-white mb-3">{{ $web_config['jurusan_name'] ?? 'JURUSAN SISTEM INFORMASI' }}</h5>
                     <p class="small" style="opacity: 0.8; line-height: 1.8;">{{ $web_config['jurusan_description'] ?? 'Mencerdaskan kehidupan bangsa.' }}</p>
@@ -187,6 +203,7 @@
                     </div>
                 </div>
 
+                <!-- Kolom 2: Tautan Cepat -->
                 <div class="col-md-4 mb-4">
                     <h5 class="text-white mb-3">Tautan Cepat</h5>
                     <ul class="list-unstyled">
@@ -198,6 +215,7 @@
                     </ul>
                 </div>
 
+                <!-- Kolom 3: Kontak -->
                 <div class="col-md-4 mb-4">
                     <h5 class="text-white mb-3">Kontak Kami</h5>
                     <ul class="list-unstyled small" style="opacity: 0.9;">
@@ -219,7 +237,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
-        // Memastikan dropdown tertutup rapi saat kursor pergi
+        // Memastikan dropdown tertutup rapi saat kursor pergi (Desktop)
         document.addEventListener("DOMContentLoaded", function(){
             if (window.innerWidth > 992) {
                 document.querySelectorAll('.navbar .nav-item').forEach(function(everyitem){

@@ -39,6 +39,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/tentang-jurusan', [HomeController::class, 'about'])->name('about');
 
 // --- PROFIL: SEJARAH ---
+// (Opsional: Jika ingin Sejarah juga masuk URL 'profil', pindahkan ke group profil di bawah)
 Route::get('/sejarah', function () {
     return view('frontend.academic.sejarah');
 })->name('sejarah');
@@ -46,7 +47,6 @@ Route::get('/sejarah', function () {
 // --- PROFIL: AKREDITASI (DENGAN FILTER PUBLISHED) ---
 Route::get('/akreditasi', function () {
     // Cari data terbaru yang statusnya SUDAH DITERBITKAN (Published)
-    // Data yang statusnya 'draft' TIDAK AKAN MUNCUL disini
     $akreditasi = Akreditasi::where('status', 'published')
                             ->latest()
                             ->first(); 
@@ -68,16 +68,29 @@ Route::get('/galeri', [HomeController::class, 'gallery'])->name('gallery');
 Route::get('/organisasi', [HomeController::class, 'organizations'])->name('organizations');
 Route::get('/prestasi', [HomeController::class, 'achievements'])->name('achievements');
 
+
+// ====================================================
+// [BARU] GROUP ROUTE PROFIL
+// URL: /profil/... | Nama Route: profil....
+// ====================================================
+Route::prefix('profil')->name('profil.')->group(function () {
+    
+    // 1. Visi Misi (DIPINDAHKAN KE SINI AGAR MENU PROFIL AKTIF)
+    Route::get('/visi-misi', function () {
+        return view('frontend.academic.visimisi');
+    })->name('visimisi');
+
+    // Catatan: Jika ingin 'Sejarah' url-nya jadi /profil/sejarah, pindahkan route sejarah ke sini.
+});
+
+
 // ----------------------------------------------------
 // GROUP ROUTE AKADEMIK
 // URL: /akademik/... | Nama Route: academic....
 // ----------------------------------------------------
 Route::prefix('akademik')->name('academic.')->group(function () {
     
-    // 1. Visi Misi
-    Route::get('/visi-misi', function () {
-        return view('frontend.academic.visimisi');
-    })->name('visimisi');
+    // 1. Visi Misi SUDAH DIHAPUS DARI SINI (Pindah ke atas)
 
     // 2. Struktur Organisasi
     Route::get('/struktur-organisasi', [AcademicController::class, 'structure'])->name('structure');
