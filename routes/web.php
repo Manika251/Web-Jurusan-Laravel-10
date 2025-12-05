@@ -16,6 +16,9 @@ use App\Http\Controllers\Admin\AchievementController;
 use App\Http\Controllers\Admin\OrganizationController;
 use App\Http\Controllers\Admin\SettingController;
 
+// [BARU] IMPORT CONTROLLER MANAJEMEN USER
+use App\Http\Controllers\Admin\UserController;
+
 // [PENTING] IMPORT CONTROLLER & MODEL AKREDITASI
 use App\Http\Controllers\Admin\AkreditasiController; 
 use App\Models\Akreditasi; 
@@ -114,6 +117,8 @@ Route::prefix('admin')->middleware(['auth', 'is_admin'])->name('admin.')->group(
     Route::get('/academic-settings', [SettingController::class, 'academic'])->name('academic.settings');
 
     // --- ROUTE ADMIN AKREDITASI (FULL CRUD) ---
-    // Menggunakan 'resource' agar bisa: Index (Tabel), Create, Store, Edit, Update, Destroy
     Route::resource('akreditasi', AkreditasiController::class);
+
+    // --- MANAJEMEN USER (TAMBAHAN BARU) ---
+    Route::resource('users', UserController::class);
 });

@@ -63,9 +63,9 @@
             <i class="fas fa-book-open me-2"></i> Kurikulum & Struktur
         </a>
 
-        <a href="#">
-            <i class="fas fa-users-cog me-2"></i> Manajemen User
-        </a>
+       <a href="{{ route('admin.users.index') }}" class="{{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+    <i class="fas fa-users-cog me-2"></i> Manajemen User
+</a>
 
         <div class="p-3 mt-4 mb-5"> <form action="{{ route('logout') }}" method="POST">
                 @csrf
