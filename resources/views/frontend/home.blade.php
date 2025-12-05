@@ -59,11 +59,11 @@ $kepsekImage = isset($web_config['jurusan_principal_photo'])
                         {{-- </span> --}}
                     {{-- </div> --}}
                     <h1 class="display-3 fw-bolder mb-4 text-white animate__animated animate__fadeInUp text-shadow-lg">
-                        {{ $web_config['jurusan_name'] ?? 'Jurusan Sistem Informasi' }}
+                        {{ $web_config['jurusan_name'] ?? 'Sistem Informasi' }}
                     </h1>
-                    <p class="lead mb-5 opacity-90 fw-light mx-auto text-shadow-sm animate__animated animate__fadeInUp animate__delay-1s" style="max-width: 700px;">
+                    {{-- <p class="lead mb-5 opacity-90 fw-light mx-auto text-shadow-sm animate__animated animate__fadeInUp animate__delay-1s" style="max-width: 700px;">
                         {{ $web_config['jurusan_description'] ?? 'Mewujudkan generasi berkarakter, cerdas, dan siap bersaing di era global melalui pendidikan berkualitas tinggi.' }}
-                    </p>
+                    </p> --}}
                     <div class="d-flex justify-content-center gap-3 animate__animated animate__fadeInUp animate__delay-1s">
                        <div class="d-flex justify-content-center gap-3">
                      {{-- <a href="{{ route('about') }}" class="btn btn-primary btn-lg rounded-pill px-4 fw-bold shadow">
