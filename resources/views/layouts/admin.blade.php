@@ -6,82 +6,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - @yield('title')</title>
 
-    <!-- 1. Bootstrap 5 CSS (CDN) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- 2. Font Awesome Icons (CDN) -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
-    <!-- 3. Custom Admin CSS -->
     <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
 </head>
 
 <body>
 
-    <!-- SIDEBAR -->
-    <div class="sidebar">
+    <div class="sidebar" style="height: 100vh; overflow-y: auto; position: fixed; top: 0; left: 0; bottom: 0; z-index: 100; width: 250px;"> 
         <div class="sidebar-header">
             <h4>PANEL ADMIN</h4>
         </div>
 
-        <!-- Menu Dashboard -->
         <a href="{{ route('admin.dashboard') }}" class="{{ request()->is('admin/dashboard') ? 'active' : '' }}">
             <i class="fas fa-home me-2"></i> Dashboard
         </a>
 
         <div class="menu-label">Konten Website</div>
 
-        <!-- Menu Kategori -->
         <a href="{{ route('admin.categories.index') }}" class="{{ request()->routeIs('admin.categories.*') ? 'active' : '' }}">
             <i class="fas fa-tags me-2"></i> Kategori Berita
         </a>
 
-        <!-- Menu Berita -->
         <a href="{{ route('admin.posts.index') }}" class="{{ request()->routeIs('admin.posts.*') ? 'active' : '' }}">
             <i class="fas fa-newspaper me-2"></i> Data Berita
         </a>
 
-        <!-- PERBAIKAN: Menu Data Dosen (Route diganti jadi admin.dosen.*) -->
         <a href="{{ route('admin.dosen.index') }}" class="{{ request()->routeIs('admin.dosen.*') ? 'active' : '' }}">
             <i class="fas fa-chalkboard-teacher me-2"></i> Data Dosen
         </a>
 
-        <!-- Menu Galeri -->
         <a href="{{ route('admin.galleries.index') }}" class="{{ request()->routeIs('admin.galleries.*') ? 'active' : '' }}">
             <i class="fas fa-images me-2"></i> Galeri Foto
         </a>
-        <!-- Menu Prestasi -->
         <a href="{{ route('admin.achievements.index') }}" class="{{ request()->routeIs('admin.achievements.*') ? 'active' : '' }}">
             <i class="fas fa-trophy me-2"></i> Data Prestasi
         </a>
-        <!-- Menu Organisasi -->
         <a href="{{ route('admin.organizations.index') }}" class="{{ request()->routeIs('admin.organizations.*') ? 'active' : '' }}">
             <i class="fas fa-users me-2"></i> Organisasi 
         </a>
         
-       <a href="{{ route('admin.akreditasi.index') }}" class="{{ Request::routeIs('admin.akreditasi.*') ? 'active' : '' }}">
-    <i class="fas fa-certificate me-2"></i> Data Akreditasi
-</a>
+        <a href="{{ route('admin.akreditasi.index') }}" class="{{ Request::routeIs('admin.akreditasi.*') ? 'active' : '' }}">
+            <i class="fas fa-certificate me-2"></i> Data Akreditasi
+        </a>
 
         <div class="menu-label">Pengaturan</div>
         <a href="{{ route('admin.settings.index') }}" class="{{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
             <i class="fas fa-jurusan me-2"></i> Identitas Jurusan
         </a>
-        <!-- Menu Fasilitas -->
         <a href="{{ route('admin.facilities.index') }}" class="{{ request()->routeIs('admin.facilities.*') ? 'active' : '' }}">
             <i class="fas fa-building me-2"></i> Fasilitas  Jurusan
         </a>
-        <!-- Menu Pengaturan Akademik -->
         <a href="{{ route('admin.academic.settings') }}" class="{{ request()->routeIs('admin.academic.*') ? 'active' : '' }}">
             <i class="fas fa-book-open me-2"></i> Kurikulum & Struktur
         </a>
 
-        {{-- <a href="#">
+        <a href="#">
             <i class="fas fa-users-cog me-2"></i> Manajemen User
-        </a> --}}
+        </a>
 
-        <div class="p-3 mt-4">
-            <form action="{{ route('logout') }}" method="POST">
+        <div class="p-3 mt-4 mb-5"> <form action="{{ route('logout') }}" method="POST">
                 @csrf
                 <button type="submit" class="btn btn-danger w-100 btn-sm">
                     <i class="fas fa-sign-out-alt me-2"></i> Keluar
@@ -90,9 +76,7 @@
         </div>
     </div>
 
-    <!-- MAIN CONTENT -->
-    <div class="main-content">
-        <!-- Top Navbar -->
+    <div class="main-content" style="margin-left: 250px;"> 
         <div class="top-navbar">
             <h5 class="page-title">@yield('title', 'Admin Dashboard')</h5>
             <div class="user-profile">
@@ -101,18 +85,15 @@
             </div>
         </div>
 
-        <!-- Dynamic Content -->
         <div class="content-body">
             @yield('content')
         </div>
 
-        <!-- Footer -->
         <footer class="admin-footer">
             <small>&copy; {{ date('Y') }} Sistem Informasi Jurusan</small>
         </footer>
     </div>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
