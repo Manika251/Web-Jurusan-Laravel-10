@@ -70,7 +70,7 @@ $mapUrl = "https://maps.google.com/maps?q=" . urlencode($alamat) . "&t=&z=15&ie=
                         {{ $web_config['jurusan_description'] ?? 'Jurusan ini didirikan dengan semangat mulia untuk mencerdaskan kehidupan bangsa dan membentuk karakter generasi muda yang unggul.' }}
                     </p>
                     <p>
-                        Sejak awal berdiri, kami memegang teguh komitmen untuk menyediakan fasilitas pendidikan terbaik, kurikulum yang adaptif, serta tenaga pengajar yang berdedikasi tinggi. Setiap langkah kami didedikasikan untuk masa depan siswa-siswi kami.
+                        Sejak awal berdiri, kami memegang teguh komitmen untuk menyediakan fasilitas pendidikan terbaik, kurikulum yang adaptif, serta tenaga pengajar yang berdedikasi tinggi. Setiap langkah kami didedikasikan untuk masa depan mahasiswa kami.
                     </p>
                 </div>
 
