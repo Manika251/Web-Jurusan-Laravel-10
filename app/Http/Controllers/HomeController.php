@@ -27,13 +27,16 @@ class HomeController extends Controller
         $achievements = Achievement::latest()->take(3)->get();
 
         // 3. Galeri Terbaru (4 item)
-        $galleries = Gallery::latest()->take(4)->get();
+        // [PERBAIKAN 1] Tambahkan filter status published di sini juga
+        $galleries = Gallery::where('status', 'published') 
+            ->latest()
+            ->take(4)
+            ->get();
 
         // 4. Data Organisasi & Ekskul (Semua)
         $organizations = Organization::all();
 
         // 5. Statistik Dosen (Hitung Otomatis dari database)
-       
         $dosens_count = Dosen::count(); 
 
         return view('frontend.home', compact(
@@ -41,7 +44,7 @@ class HomeController extends Controller
             'achievements',
             'galleries',
             'organizations',
-            'dosens_count' // Kirim variabel baru ini ke view home
+            'dosens_count'
         ));
     }
 
@@ -54,15 +57,12 @@ class HomeController extends Controller
     }
 
     /**
-    
+     * Halaman Daftar Dosen
      */
-    // UBAH 3: Ganti nama function jadi 'dosen' (sesuai web.php)
     public function dosen() 
     {
         // Ambil semua dosen, 12 per halaman
         $dosens = Dosen::paginate(12);
-        
-        // Arahkan ke view frontend.dosen (Pastikan kamu rename file view-nya juga)
         return view('frontend.dosen', compact('dosens'));
     }
 
@@ -116,9 +116,11 @@ class HomeController extends Controller
      */
     public function gallery()
     {
-        $galleries = Gallery::latest()->paginate(12);
+        // [PERBAIKAN 2] Filter hanya yang statusnya 'published'
+        $galleries = Gallery::where('status', 'published')
+            ->latest()
+            ->paginate(12);
+            
         return view('frontend.gallery', compact('galleries'));
     }
-
-    
 }

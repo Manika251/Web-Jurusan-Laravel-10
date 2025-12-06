@@ -79,7 +79,7 @@ $mapUrl = "https://maps.google.com/maps?q=" . urlencode($alamat) . "&t=&z=15&ie=
                         <div class="d-flex align-items-center">
                             <i class="fas fa-check-circle text-primary fa-2x me-3"></i>
                             <div>
-                                <h6 class="fw-bold mb-0">Akreditasi A</h6>
+                                <h6 class="fw-bold mb-0">Akreditasi B</h6>
                                 <small class="text-muted">Standar Nasional</small>
                             </div>
                         </div>

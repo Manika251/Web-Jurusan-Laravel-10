@@ -3,7 +3,6 @@
 
 @section('content')
 <div class="row">
-    <!-- Form Tambah (Kiri) -->
     <div class="col-md-4">
         <div class="card card-custom">
             <div class="card-header bg-white fw-bold">Tambah Fasilitas Baru</div>
@@ -28,7 +27,6 @@
         </div>
     </div>
 
-    <!-- Tabel Data (Kanan) -->
     <div class="col-md-8">
         <div class="card card-custom">
             <div class="card-body">
@@ -54,9 +52,16 @@
                                 <small class="text-muted">{{ $item->description }}</small>
                             </td>
                             <td>
-                                <form action="{{ route('admin.facilities.destroy', $item->id) }}" method="POST">
-                                    @csrf @method('DELETE')
-                                    <button class="btn btn-sm btn-danger" onclick="return confirm('Hapus?')"><i class="fas fa-trash"></i></button>
+                                <a href="{{ route('admin.facilities.edit', $item->id) }}" class="btn btn-sm btn-warning">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+
+                                <form action="{{ route('admin.facilities.destroy', $item->id) }}" method="POST" style="display:inline;">
+                                    @csrf 
+                                    @method('DELETE')
+                                    <button class="btn btn-sm btn-danger" onclick="return confirm('Hapus?')">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
                                 </form>
                             </td>
                         </tr>

@@ -7,10 +7,23 @@
     <title>Admin Panel - @yield('title')</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-
     <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
+
+    <style>
+        /* TRANSISI HALUS */
+        .sidebar, .main-content {
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* KONDISI SAAT SIDEBAR DITUTUP (COLLAPSED) */
+        body.collapsed .sidebar {
+            margin-left: -250px; /* Sembunyikan ke kiri */
+        }
+        body.collapsed .main-content {
+            margin-left: 0 !important; /* Konten jadi penuh */
+        }
+    </style>
 </head>
 
 <body>
@@ -53,21 +66,24 @@
         </a>
 
         <div class="menu-label">Pengaturan</div>
+        
         <a href="{{ route('admin.settings.index') }}" class="{{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
-            <i class="fas fa-jurusan me-2"></i> Identitas Jurusan
+            <i class="fas fa-id-card me-2"></i> Identitas Jurusan
         </a>
+        
         <a href="{{ route('admin.facilities.index') }}" class="{{ request()->routeIs('admin.facilities.*') ? 'active' : '' }}">
-            <i class="fas fa-building me-2"></i> Fasilitas  Jurusan
+            <i class="fas fa-building me-2"></i> Fasilitas Jurusan
         </a>
         <a href="{{ route('admin.academic.settings') }}" class="{{ request()->routeIs('admin.academic.*') ? 'active' : '' }}">
             <i class="fas fa-book-open me-2"></i> Kurikulum & Struktur
         </a>
 
-       <a href="{{ route('admin.users.index') }}" class="{{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
-    <i class="fas fa-users-cog me-2"></i> Manajemen User
-</a>
+        <a href="{{ route('admin.users.index') }}" class="{{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+            <i class="fas fa-users-cog me-2"></i> Manajemen User
+        </a>
 
-        <div class="p-3 mt-4 mb-5"> <form action="{{ route('logout') }}" method="POST">
+        <div class="p-3 mt-4 mb-5"> 
+            <form action="{{ route('logout') }}" method="POST">
                 @csrf
                 <button type="submit" class="btn btn-danger w-100 btn-sm">
                     <i class="fas fa-sign-out-alt me-2"></i> Keluar
@@ -78,7 +94,15 @@
 
     <div class="main-content" style="margin-left: 250px;"> 
         <div class="top-navbar">
-            <h5 class="page-title">@yield('title', 'Admin Dashboard')</h5>
+            <div class="d-flex align-items-center">
+                
+                <button class="btn btn-sm btn-light border shadow-sm me-3" id="sidebarToggle">
+                    <i class="fas fa-chevron-left" id="toggleIcon"></i>
+                </button>
+
+                <h5 class="page-title m-0">@yield('title', 'Admin Dashboard')</h5>
+            </div>
+
             <div class="user-profile">
                 <span>Hi, {{ Auth::user()->name }}</span>
                 <i class="fas fa-user-circle fa-2x text-secondary"></i>
@@ -95,6 +119,28 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const toggleIcon = document.getElementById('toggleIcon');
+        const body = document.body;
+
+        sidebarToggle.addEventListener('click', function() {
+            // 1. Toggle class 'collapsed' di body
+            body.classList.toggle('collapsed');
+
+            // 2. Cek apakah sekarang sedang tertutup atau terbuka?
+            if (body.classList.contains('collapsed')) {
+                // KONDISI TERTUTUP: Ganti icon jadi Panah KANAN (untuk membuka)
+                toggleIcon.classList.remove('fa-chevron-left');
+                toggleIcon.classList.add('fa-chevron-right');
+            } else {
+                // KONDISI TERBUKA: Ganti icon jadi Panah KIRI (untuk menutup)
+                toggleIcon.classList.remove('fa-chevron-right');
+                toggleIcon.classList.add('fa-chevron-left');
+            }
+        });
+    </script>
 </body>
 
 </html>

@@ -8,5 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Gallery extends Model
 {
     use HasFactory;
-    protected $guarded = ['id'];
+
+    // Kita ganti guarded dengan fillable agar lebih aman dan spesifik
+    protected $fillable = [
+        'title',
+        'image',
+        'caption',
+        'status', // <--- Kolom status dimasukkan di sini
+    ];
 }

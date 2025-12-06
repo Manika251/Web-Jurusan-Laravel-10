@@ -22,16 +22,25 @@ class SettingController extends Controller
 
     public function update(Request $request)
     {
-        // DAFTAR SEMUA KUNCI FILE YANG BISA DIUPLOAD
+        // === VALIDASI KHUSUS FOTO ===
+        $request->validate([
+            // Semua harus berupa IMAGE (Foto), maksimal 2MB
+            'jurusan_principal_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'jurusan_hero_image'      => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'jurusan_hero_image_2'    => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'jurusan_hero_image_3'    => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        // List key file
         $files = [
             'jurusan_principal_photo',
             'jurusan_hero_image',
-            'jurusan_hero_image_2', // Tambahan Baru
-            'jurusan_hero_image_3', // Tambahan Baru
+            'jurusan_hero_image_2',
+            'jurusan_hero_image_3',
             'jurusan_structure_image'
         ];
 
-        // 1. Loop untuk handle upload file
+        // 1. Simpan File jika ada upload baru
         foreach ($files as $fileKey) {
             if ($request->hasFile($fileKey)) {
                 $path = $request->file($fileKey)->store('settings', 'public');
@@ -39,11 +48,13 @@ class SettingController extends Controller
             }
         }
 
-        // 2. Handle Data Teks (kecuali file & token)
+        // 2. Simpan Data Teks
         $data = $request->except(array_merge(['_token', '_method'], $files));
 
         foreach ($data as $key => $value) {
-            Setting::updateOrCreate(['key' => $key], ['value' => $value]);
+            if ($value !== null) {
+                Setting::updateOrCreate(['key' => $key], ['value' => $value]);
+            }
         }
 
         return redirect()->back()->with('success', 'Pengaturan berhasil diperbarui!');

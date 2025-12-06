@@ -20,7 +20,6 @@
                     @csrf
                     @method('PUT')
 
-                    <!-- TAB NAVIGASI -->
                     <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
                         <li class="nav-item">
                             <button class="nav-link active" id="umum-tab" data-bs-toggle="tab" data-bs-target="#umum" type="button">Umum & Kontak</button>
@@ -32,13 +31,12 @@
                             <button class="nav-link" id="statistik-tab" data-bs-toggle="tab" data-bs-target="#statistik" type="button">Statistik Angka</button>
                         </li>
                         <li class="nav-item">
-                            <button class="nav-link" id="profil-tab" data-bs-toggle="tab" data-bs-target="#profil" type="button">Profil (Sejarah, Visi, Misi)</button>
+                            <button class="nav-link" id="profil-tab" data-bs-toggle="tab" data-bs-target="#profil" type="button">Profil (Visi, Misi)</button>
                         </li>
                     </ul>
 
                     <div class="tab-content" id="myTabContent">
 
-                        <!-- TAB 1: UMUM -->
                         <div class="tab-pane fade show active" id="umum">
                             <div class="row">
                                 <div class="col-md-6 mb-3">
@@ -77,32 +75,67 @@
                             </div>
                         </div>
 
-                        <!-- TAB 2: MEDIA -->
                         <div class="tab-pane fade" id="media">
                             <div class="alert alert-info small">Upload foto untuk mempercantik tampilan website.</div>
+                            
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label class="form-label">Foto Ketua Jurusan</label>
                                     <input type="file" name="jurusan_principal_photo" class="form-control" accept="image/*">
+                                    
+                                    {{-- Preview Foto Kajur --}}
+                                    @if(!empty($settings['jurusan_principal_photo']))
+                                        <div class="mt-2 p-2 border rounded bg-light">
+                                            <small class="text-muted d-block">Terpasang:</small>
+                                            <img src="{{ asset('storage/' . $settings['jurusan_principal_photo']) }}" style="height: 80px; border-radius: 4px;">
+                                        </div>
+                                    @endif
                                 </div>
+
                                 <div class="col-md-6">
-                                    <label class="form-label">Slide Banner Utama</label>
+                                    <label class="form-label fw-bold text-primary">Slide Banner Utama</label>
                                     <input type="file" name="jurusan_hero_image" class="form-control" accept="image/*">
+                                    <small class="text-muted" style="font-size: 11px;">*Format Gambar (JPG/PNG)</small>
+                                    
+                                    {{-- Preview Banner Utama --}}
+                                    @if(!empty($settings['jurusan_hero_image']))
+                                        <div class="mt-2 p-2 border rounded bg-light">
+                                            <small class="text-muted d-block mb-1">Gambar Terpasang:</small>
+                                            <img src="{{ asset('storage/' . $settings['jurusan_hero_image']) }}" 
+                                                 alt="Preview" 
+                                                 class="img-fluid rounded" 
+                                                 style="height: 120px; object-fit: cover; border: 1px solid #ddd;">
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
+
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label class="form-label">Slide Banner 2</label>
                                     <input type="file" name="jurusan_hero_image_2" class="form-control" accept="image/*">
+                                    
+                                    {{-- Preview Banner 2 --}}
+                                    @if(!empty($settings['jurusan_hero_image_2']))
+                                        <div class="mt-2 p-2 border rounded bg-light">
+                                            <img src="{{ asset('storage/' . $settings['jurusan_hero_image_2']) }}" style="height: 60px; border-radius: 4px;">
+                                        </div>
+                                    @endif
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Slide Banner 3</label>
                                     <input type="file" name="jurusan_hero_image_3" class="form-control" accept="image/*">
+                                    
+                                    {{-- Preview Banner 3 --}}
+                                    @if(!empty($settings['jurusan_hero_image_3']))
+                                        <div class="mt-2 p-2 border rounded bg-light">
+                                            <img src="{{ asset('storage/' . $settings['jurusan_hero_image_3']) }}" style="height: 60px; border-radius: 4px;">
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
 
-                        <!-- TAB 3: STATISTIK (BARU) -->
                         <div class="tab-pane fade" id="statistik">
                             <div class="alert alert-primary d-flex align-items-center" role="alert">
                                 <i class="fas fa-info-circle me-2"></i>
@@ -137,12 +170,11 @@
                             </div>
                         </div>
 
-                        <!-- TAB 4: PROFIL -->
                         <div class="tab-pane fade" id="profil">
-                            <div class="mb-4">
+                            {{-- <div class="mb-4">
                                 <label class="form-label fw-bold">Sejarah Jurusan</label>
                                 <textarea name="jurusan_history" id="editor_sejarah">{{ $settings['jurusan_history'] ?? '' }}</textarea>
-                            </div>
+                            </div> --}}
                             <div class="mb-4">
                                 <label class="form-label fw-bold">Visi</label>
                                 <textarea name="jurusan_vision" class="form-control" rows="3">{{ $settings['jurusan_vision'] ?? '' }}</textarea>
@@ -175,6 +207,29 @@
     });
     ClassicEditor.create(document.querySelector('#editor_sejarah')).catch(error => {
         console.error(error);
+    });
+
+    // === SCRIPT TAMBAHAN UNTUK MENYIMPAN POSISI TAB TERAKHIR ===
+    document.addEventListener("DOMContentLoaded", function(){
+        // 1. Ambil data tab terakhir dari penyimpanan browser
+        var activeTab = localStorage.getItem('activeTabSettings');
+        
+        // 2. Jika ada, otomatis klik tab tersebut
+        if(activeTab){
+            var tabTrigger = document.querySelector('#' + activeTab);
+            if(tabTrigger) {
+                var tabInstance = new bootstrap.Tab(tabTrigger);
+                tabInstance.show();
+            }
+        }
+
+        // 3. Simpan ID tab setiap kali kita klik tab baru
+        var tabEls = document.querySelectorAll('button[data-bs-toggle="tab"]');
+        tabEls.forEach(function(tabEl) {
+            tabEl.addEventListener('shown.bs.tab', function (event) {
+                localStorage.setItem('activeTabSettings', event.target.id);
+            });
+        });
     });
 </script>
 

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AcademicController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\DosenController;
+use App\Http\Controllers\Admin\DosenController; // Pastikan ini ter-import
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\GalleryController;
@@ -39,7 +39,6 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/tentang-jurusan', [HomeController::class, 'about'])->name('about');
 
 // --- PROFIL: SEJARAH ---
-// (Opsional: Jika ingin Sejarah juga masuk URL 'profil', pindahkan ke group profil di bawah)
 Route::get('/sejarah', function () {
     return view('frontend.academic.sejarah');
 })->name('sejarah');
@@ -56,8 +55,10 @@ Route::get('/akreditasi', function () {
 })->name('akreditasi');
 
 
-// Route Dosen
-Route::get('/dosen', [HomeController::class, 'dosen'])->name('dosen');
+// --- [PERUBAHAN DISINI] ROUTE DOSEN ---
+// Mengarah ke DosenController function tampilPublic (sesuai request layout baru)
+Route::get('/dosen', [DosenController::class, 'tampilPublic'])->name('dosen');
+
 
 // Route Berita
 Route::get('/berita', [HomeController::class, 'posts'])->name('posts');
@@ -75,12 +76,11 @@ Route::get('/prestasi', [HomeController::class, 'achievements'])->name('achievem
 // ====================================================
 Route::prefix('profil')->name('profil.')->group(function () {
     
-    // 1. Visi Misi (DIPINDAHKAN KE SINI AGAR MENU PROFIL AKTIF)
+    // 1. Visi Misi
     Route::get('/visi-misi', function () {
         return view('frontend.academic.visimisi');
     })->name('visimisi');
 
-    // Catatan: Jika ingin 'Sejarah' url-nya jadi /profil/sejarah, pindahkan route sejarah ke sini.
 });
 
 
@@ -90,15 +90,13 @@ Route::prefix('profil')->name('profil.')->group(function () {
 // ----------------------------------------------------
 Route::prefix('akademik')->name('academic.')->group(function () {
     
-    // 1. Visi Misi SUDAH DIHAPUS DARI SINI (Pindah ke atas)
-
-    // 2. Struktur Organisasi
+    // 1. Struktur Organisasi
     Route::get('/struktur-organisasi', [AcademicController::class, 'structure'])->name('structure');
 
-    // 3. Kurikulum
+    // 2. Kurikulum
     Route::get('/kurikulum', [AcademicController::class, 'curriculum'])->name('curriculum');
 
-    // 4. Fasilitas
+    // 3. Fasilitas
     Route::get('/fasilitas', [AcademicController::class, 'facilities'])->name('facilities');
 });
 
@@ -123,7 +121,9 @@ Route::prefix('admin')->middleware(['auth', 'is_admin'])->name('admin.')->group(
     Route::resource('achievements', AchievementController::class);
     Route::resource('organizations', OrganizationController::class);
     
-    Route::resource('galleries', GalleryController::class)->only(['index', 'store', 'destroy']);
+    // --- PERUBAHAN DI SINI ---
+    // Sekarang fitur Edit & Update sudah aktif (tidak dibatasi only lagi)
+    Route::resource('galleries', GalleryController::class);
 
     Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
     Route::put('/settings', [SettingController::class, 'update'])->name('settings.update');

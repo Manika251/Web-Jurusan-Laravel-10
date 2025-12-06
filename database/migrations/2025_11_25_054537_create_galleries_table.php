@@ -9,22 +9,19 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::create('galleries', function (Blueprint $table) {
-            $table->id();
-            $table->string('title')->nullable();
-            $table->string('image'); // Path file gambar
-            $table->text('caption')->nullable();
-            $table->timestamps();
-        });
-    }
+    public function up()
+{
+    Schema::table('galleries', function (Blueprint $table) {
+        // Kita tambah kolom 'status' dengan pilihan 'draft' atau 'published'
+        // Kita set default 'published' agar foto lama otomatis dianggap tayang
+        $table->enum('status', ['draft', 'published'])->default('published')->after('title');
+    });
+}
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('galleries');
-    }
+public function down()
+{
+    Schema::table('galleries', function (Blueprint $table) {
+        $table->dropColumn('status');
+    });
+}
 };
