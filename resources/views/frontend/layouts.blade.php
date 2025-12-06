@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title') - {{ $web_config['jurusan_name'] ?? 'Web Jurusan' }}</title>
+    {{-- JUDUL HALAMAN DINAMIS --}}
+    {{-- Ini akan memunculkan: "Akreditasi - Sistem Informasi" --}}
+    <title>@yield('title') - {{ $web_config['jurusan_name'] ?? 'Sistem Informasi' }}</title>
 
     <link rel="icon" href="{{ asset('img/logo-si.png') }}" type="image/png">
 
@@ -22,7 +24,7 @@
             min-height: 100vh;
         }
 
-        /* --- NAVBAR STYLE (UGM) --- */
+        /* --- NAVBAR STYLE (UGM STYLE) --- */
         .header-top {
             background-color: #0d3b66; /* Biru Tua */
             padding: 15px 0;
@@ -106,7 +108,6 @@
 
 <body>
 
-    <!-- HEADER ATAS (LOGO) -->
     <div class="header-top">
         <div class="container d-flex align-items-center">
             <a href="{{ route('home') }}" class="d-flex align-items-center text-decoration-none text-white">
@@ -123,7 +124,6 @@
         </div>
     </div>
 
-    <!-- NAVBAR (MENU) -->
     <nav class="navbar navbar-expand-lg header-nav sticky-top shadow-sm">
         <div class="container">
             <button class="navbar-toggler ms-auto my-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -132,26 +132,22 @@
             
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
-                    <!-- MENU BERANDA -->
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">Beranda</a>
                     </li>
                     
-                    <!-- MENU PROFIL (SUDAH DIPERBAIKI) -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle {{ request()->routeIs('profil.*') || request()->routeIs('akreditasi') || request()->routeIs('sejarah') ? 'active' : '' }}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Profil
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{{ route('akreditasi') }}">Akreditasi</a></li>
-                            <!-- Link ini sekarang mengarah ke route 'profil.visimisi' -->
                             <li><a class="dropdown-item" href="{{ route('profil.visimisi') }}">Visi & Misi</a></li>
                             <li><a class="dropdown-item" href="{{ route('sejarah') }}">Sejarah</a></li>
                             <li><a class="dropdown-item" href="https://www.google.com/maps?q=Universitas+Musamus+Merauke" target="_blank">Maps</a></li>
                         </ul>
                     </li>
 
-                    <!-- MENU AKADEMIK -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle {{ request()->routeIs('academic.*') || request()->routeIs('dosen') ? 'active' : '' }}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Akademik
@@ -164,7 +160,6 @@
                         </ul>
                     </li>
 
-                    <!-- MENU AKTIFITAS -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle {{ request()->routeIs('posts*') || request()->routeIs('achievements*') || request()->routeIs('organizations*') ? 'active' : '' }}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Aktifitas
@@ -176,7 +171,6 @@
                         </ul>
                     </li>
 
-                    <!-- MENU GALERI -->
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('gallery') ? 'active' : '' }}" href="{{ route('gallery') }}">Galeri</a>
                     </li>
@@ -185,14 +179,11 @@
         </div>
     </nav>
 
-    <!-- KONTEN HALAMAN -->
     @yield('content')
 
-    <!-- FOOTER -->
     <footer>
         <div class="container pb-4">
             <div class="row">
-                <!-- Kolom 1: Identitas -->
                 <div class="col-md-4 mb-4">
                     <h5 class="text-white mb-3">{{ $web_config['jurusan_name'] ?? 'JURUSAN SISTEM INFORMASI' }}</h5>
                     <p class="small" style="opacity: 0.8; line-height: 1.8;">{{ $web_config['jurusan_description'] ?? 'Mencerdaskan kehidupan bangsa.' }}</p>
@@ -203,7 +194,6 @@
                     </div>
                 </div>
 
-                <!-- Kolom 2: Tautan Cepat -->
                 <div class="col-md-4 mb-4">
                     <h5 class="text-white mb-3">Tautan Cepat</h5>
                     <ul class="list-unstyled">
@@ -215,7 +205,6 @@
                     </ul>
                 </div>
 
-                <!-- Kolom 3: Kontak -->
                 <div class="col-md-4 mb-4">
                     <h5 class="text-white mb-3">Kontak Kami</h5>
                     <ul class="list-unstyled small" style="opacity: 0.9;">

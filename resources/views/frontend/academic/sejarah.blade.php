@@ -1,5 +1,5 @@
 @extends('frontend.layouts')
-@section('title', 'Profil Jurusan')
+@section('title', 'Sejarah')
 
 @section('content')
 

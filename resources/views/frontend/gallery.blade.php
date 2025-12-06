@@ -1,5 +1,5 @@
 @extends('frontend.layouts')
-@section('title', 'Jurusan Sistem Informasi')
+@section('title', 'Galeri')
 
 @section('content')
 <div class="container py-5">
