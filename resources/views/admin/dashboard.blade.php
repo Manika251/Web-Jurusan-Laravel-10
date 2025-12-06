@@ -3,206 +3,155 @@
 @section('title', 'Dashboard')
 
 @section('content')
-<div class="row g-4 mb-4">
-    <!-- 1. KARTU SELAMAT DATANG -->
-    <div class="col-12">
-        <div class="card border-0 shadow-sm bg-primary text-white overflow-hidden position-relative rounded-4">
-            <div class="card-body p-4 position-relative z-index-1">
-                <h3 class="fw-bold mb-1">Selamat Datang, {{ Auth::user()->name }}! 👋</h3>
-                <p class="mb-0 opacity-75">Ini adalah panel kontrol utama untuk mengelola website Jurusan Sistem Informasi.</p>
-            </div>
-            <!-- Dekorasi Background Abstrak -->
-            <div class="position-absolute top-0 end-0 h-100 w-50 bg-white opacity-10" style="transform: skewX(-20deg) translateX(50px);"></div>
+
+<div class="container-fluid p-0">
+    
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <div>
+            <h3 class="mb-0 fw-bold text-dark">Dashboard</h3>
+            <p class="text-muted mb-0">Selamat datang, {{ Auth::user()->name }}</p>
+        </div>
+        <div>
+            <span class="badge bg-light text-dark border px-3 py-2">
+                <i class="far fa-calendar-alt me-2"></i> {{ date('d M Y') }}
+            </span>
         </div>
     </div>
 
-    <!-- 2. KARTU STATISTIK (4 KOLOM) -->
-    <!-- Total Berita -->
-    <div class="col-md-3">
-        <div class="card border-0 shadow-sm rounded-4 h-100">
-            <div class="card-body p-4 d-flex align-items-center">
-                <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
-                    <i class="fas fa-newspaper fa-lg"></i>
-                </div>
-                <div>
-                    <h6 class="text-muted mb-0 small text-uppercase fw-bold">Total Berita</h6>
-                    <h3 class="fw-bold mb-0">{{ $counts['posts'] }}</h3>
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-xl-3">
+            <div class="card border border-light shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <span class="text-muted small fw-bold text-uppercase">Total Berita</span>
+                        <i class="fas fa-newspaper text-primary"></i>
+                    </div>
+                    <h2 class="mb-0 fw-bold">{{ $counts['posts'] ?? 0 }}</h2>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Total Dosen -->
-    <div class="col-md-3">
-        <div class="card border-0 shadow-sm rounded-4 h-100">
-            <div class="card-body p-4 d-flex align-items-center">
-                <div class="bg-success bg-opacity-10 text-success rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
-                    <i class="fas fa-chalkboard-teacher fa-lg"></i>
-                </div>
-                <div>
-                    <h6 class="text-muted mb-0 small text-uppercase fw-bold">Total Dosen</h6>
-                    <!-- UBAH 1: Ganti key jadi dosens (sesuai Controller) -->
-                    <h3 class="fw-bold mb-0">{{ $counts['dosens'] }}</h3>
+        <div class="col-6 col-xl-3">
+            <div class="card border border-light shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <span class="text-muted small fw-bold text-uppercase">Total Dosen</span>
+                        <i class="fas fa-chalkboard-user text-success"></i>
+                    </div>
+                    <h2 class="mb-0 fw-bold">{{ $counts['dosens'] ?? 0 }}</h2>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Prestasi -->
-    <div class="col-md-3">
-        <div class="card border-0 shadow-sm rounded-4 h-100">
-            <div class="card-body p-4 d-flex align-items-center">
-                <div class="bg-warning bg-opacity-10 text-warning rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
-                    <i class="fas fa-trophy fa-lg"></i>
-                </div>
-                <div>
-                    <h6 class="text-muted mb-0 small text-uppercase fw-bold">Prestasi</h6>
-                    <h3 class="fw-bold mb-0">{{ $counts['achievements'] }}</h3>
+        <div class="col-6 col-xl-3">
+            <div class="card border border-light shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <span class="text-muted small fw-bold text-uppercase">Prestasi</span>
+                        <i class="fas fa-trophy text-warning"></i>
+                    </div>
+                    <h2 class="mb-0 fw-bold">{{ $counts['achievements'] ?? 0 }}</h2>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Galeri -->
-    <div class="col-md-3">
-        <div class="card border-0 shadow-sm rounded-4 h-100">
-            <div class="card-body p-4 d-flex align-items-center">
-                <div class="bg-info bg-opacity-10 text-info rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
-                    <i class="fas fa-images fa-lg"></i>
-                </div>
-                <div>
-                    <h6 class="text-muted mb-0 small text-uppercase fw-bold">Galeri Foto</h6>
-                    <h3 class="fw-bold mb-0">{{ $counts['galleries'] }}</h3>
+        <div class="col-6 col-xl-3">
+            <div class="card border border-light shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <span class="text-muted small fw-bold text-uppercase">Galeri Foto</span>
+                        <i class="fas fa-images text-info"></i>
+                    </div>
+                    <h2 class="mb-0 fw-bold">{{ $counts['galleries'] ?? 0 }}</h2>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="row g-4">
-    <!-- 3. TABEL AKTIVITAS TERBARU -->
-    <div class="col-md-8">
-        <div class="card border-0 shadow-sm rounded-4 h-100">
-            <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center border-bottom-0">
-                <h6 class="fw-bold mb-0">Artikel Terbaru</h6>
-                <a href="{{ route('admin.posts.index') }}" class="btn btn-sm btn-outline-primary rounded-pill px-3">Lihat Semua</a>
-            </div>
-            <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
-                    <thead class="bg-light">
-                        <tr>
-                            <th class="ps-4 border-0 text-muted small text-uppercase">Judul</th>
-                            <th class="border-0 text-muted small text-uppercase">Kategori</th>
-                            <th class="border-0 text-muted small text-uppercase">Status</th>
-                            <th class="border-0 text-muted small text-uppercase">Tanggal</th>
-                        </tr>
-                    </thead>
-                    <tbody class="border-top-0">
-                        @forelse($recentPosts as $post)
-                        <tr>
-                            <td class="ps-4">
-                                <div class="d-flex align-items-center">
-                                    @if($post->image)
-                                    <img src="{{ asset('storage/' . $post->image) }}" class="rounded me-3" width="40" height="40" style="object-fit: cover;">
+    <div class="row g-4">
+        
+        <div class="col-lg-8">
+            <div class="card border border-light shadow-sm">
+                <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                    <h6 class="mb-0 fw-bold">Artikel Terbaru</h6>
+                    <a href="{{ route('admin.posts.index') }}" class="btn btn-sm btn-outline-secondary">Lihat Semua</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="bg-light">
+                            <tr>
+                                <th class="ps-4 text-muted small border-bottom-0">Judul</th>
+                                <th class="text-muted small border-bottom-0">Kategori</th>
+                                <th class="text-muted small border-bottom-0">Status</th>
+                                <th class="pe-4 text-end text-muted small border-bottom-0">Tanggal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($recentPosts as $post)
+                            <tr>
+                                <td class="ps-4 py-3">
+                                    <span class="d-block fw-bold text-dark text-truncate" style="max-width: 250px;">
+                                        {{ $post->title }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="badge bg-light text-secondary border">
+                                        {{ $post->category->title ?? '-' }}
+                                    </span>
+                                </td>
+                                <td>
+                                    @if($post->status == 'published')
+                                        <span class="text-success small fw-bold"><i class="fas fa-check me-1"></i> Terbit</span>
                                     @else
-                                    <div class="bg-light rounded me-3 d-flex align-items-center justify-content-center text-muted" style="width: 40px; height: 40px;">
-                                        <i class="fas fa-image"></i>
-                                    </div>
+                                        <span class="text-warning small fw-bold"><i class="fas fa-clock me-1"></i> Draft</span>
                                     @endif
-                                    <div>
-                                        <div class="fw-bold text-dark">{{ Str::limit($post->title, 30) }}</div>
-                                        <small class="text-muted"><i class="fas fa-eye me-1"></i> {{ $post->views_count }}x dibaca</small>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><span class="badge bg-light text-dark border">{{ $post->category->title }}</span></td>
-                            <td>
-                                <span class="badge {{ $post->status == 'published' ? 'bg-success-subtle text-success' : 'bg-warning-subtle text-warning' }}">
-                                    {{ ucfirst($post->status) }}
-                                </span>
-                            </td>
-                            <td class="text-muted small">{{ $post->created_at->format('d M Y') }}</td>
-                        </tr>
-                        @empty
-                        <tr>
-                            <td colspan="4" class="text-center py-4 text-muted">Belum ada artikel yang diterbitkan.</td>
-                        </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+                                </td>
+                                <td class="pe-4 text-end text-muted small">
+                                    {{ $post->created_at->format('d/m/Y') }}
+                                </td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="4" class="text-center py-4 text-muted">Tidak ada data.</td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- 4. AKSI CEPAT (SHORTCUTS) -->
-    <div class="col-md-4">
-        <div class="card border-0 shadow-sm rounded-4 h-100">
-            <div class="card-header bg-white py-3 border-bottom-0">
-                <h6 class="fw-bold mb-0">Aksi Cepat</h6>
-            </div>
-            <div class="card-body">
-                <div class="d-grid gap-3">
-                    <!-- Tombol Tulis Berita -->
-                    <a href="{{ route('admin.posts.create') }}" class="btn btn-outline-primary text-start p-3 rounded-3 d-flex align-items-center hover-shadow border-light bg-light-subtle text-dark">
-                        <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
-                            <i class="fas fa-pen"></i>
-                        </div>
+        <div class="col-lg-4">
+            <div class="card border border-light shadow-sm">
+                <div class="card-header bg-white py-3">
+                    <h6 class="mb-0 fw-bold">Menu Cepat</h6>
+                </div>
+                <div class="list-group list-group-flush">
+                    <a href="{{ route('admin.posts.create') }}" class="list-group-item list-group-item-action py-3 d-flex align-items-center">
+                        <i class="fas fa-pen text-primary me-3" style="width: 20px;"></i>
                         <div>
-                            <div class="fw-bold">Tulis Berita Baru</div>
-                            <div class="small text-muted">Publikasikan artikel atau pengumuman</div>
+                            <div class="fw-bold text-dark">Tulis Berita</div>
+                            <small class="text-muted">Buat postingan baru</small>
                         </div>
                     </a>
-
-                    <!-- Tombol Tambah Dosen -->
-                    <!-- UBAH 2: Update route jadi admin.dosen.create -->
-                    <a href="{{ route('admin.dosen.create') }}" class="btn btn-outline-success text-start p-3 rounded-3 d-flex align-items-center hover-shadow border-light bg-light-subtle text-dark">
-                        <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
-                            <i class="fas fa-user-plus"></i>
-                        </div>
+                    <a href="{{ route('admin.dosen.create') }}" class="list-group-item list-group-item-action py-3 d-flex align-items-center">
+                        <i class="fas fa-user-plus text-success me-3" style="width: 20px;"></i>
                         <div>
-                            <div class="fw-bold">Tambah Dosen</div>
-                            <div class="small text-muted">Input data pengajar baru</div>
+                            <div class="fw-bold text-dark">Tambah Dosen</div>
+                            <small class="text-muted">Input data pengajar</small>
                         </div>
                     </a>
-
-                    <!-- Tombol Input Prestasi -->
-                    <a href="{{ route('admin.achievements.create') }}" class="btn btn-outline-warning text-start p-3 rounded-3 d-flex align-items-center hover-shadow border-light bg-light-subtle text-dark">
-                        <div class="bg-warning text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
-                            <i class="fas fa-trophy"></i>
-                        </div>
+                    <a href="{{ route('admin.achievements.create') }}" class="list-group-item list-group-item-action py-3 d-flex align-items-center">
+                        <i class="fas fa-trophy text-warning me-3" style="width: 20px;"></i>
                         <div>
-                            <div class="fw-bold">Input Prestasi</div>
-                            <div class="small text-muted">Tambahkan pencapaian Mahasiswa</div>
+                            <div class="fw-bold text-dark">Input Prestasi</div>
+                            <small class="text-muted">Catat penghargaan</small>
                         </div>
                     </a>
                 </div>
             </div>
         </div>
+
     </div>
 </div>
-
-<style>
-    /* Efek Hover untuk tombol shortcut */
-    .hover-shadow:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
-        background-color: white;
-        border-color: var(--bs-primary) !important;
-        color: var(--bs-primary) !important;
-    }
-
-    .bg-success-subtle {
-        background-color: #d1e7dd;
-        color: #0f5132;
-    }
-
-    .bg-warning-subtle {
-        background-color: #fff3cd;
-        color: #664d03;
-    }
-
-    .bg-light-subtle {
-        background-color: #f8f9fa;
-    }
-</style>
 @endsection
